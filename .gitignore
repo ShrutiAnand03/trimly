@@ -1,0 +1,27 @@
+# =========================
+# Python / Flask
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Build artifacts
+build/
+dist/
+
+# IDEs
+.vscode/
+
+# Logs
+*.log
