@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, redirect
 from app.services import UrlService
 url_bp = Blueprint(
     "urls",
@@ -9,7 +9,25 @@ url_bp = Blueprint(
 def create_short_url():
     data = request.get_json()
     url = data["url"]
-    print("==url==", url)
     url_service =UrlService()
     response = url_service.create_short_url(url=url)
     return jsonify(response)
+
+@url_bp.route("/<short_code>", methods=["GET"])
+def redirect_url(short_code: str):
+    url_service = UrlService()
+
+    original_url = url_service.get_original_url(
+        short_code=short_code
+    )
+
+    if not original_url:
+        return jsonify({
+            "success": False,
+            "data": {
+                "code": 404,
+                "message": "original url not found"
+            }
+        }), 404
+
+    return redirect(original_url)

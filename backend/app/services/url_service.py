@@ -3,7 +3,9 @@ from app.utils import generate_short_code
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
-
+from app.config import database
+from app.models import Url
+from datetime import datetime
 class UrlService:
     """url service"""
 
@@ -42,10 +44,6 @@ class UrlService:
         except Exception:
             return False
 
-
-    def generate_short_code():
-        pass
-
     def create_short_url(
         self,
         url: str
@@ -59,8 +57,38 @@ class UrlService:
                    "message": "Invalid url"
                }
             }
-
+        
         short_code = generate_short_code()
-        print("==short_code==", short_code)
+        session = database.SessionLocal()
+        url_object = Url(
+            original_url=url,
+            short_code=short_code,
+            created_at=datetime.now()
+        )
+        session.add(url_object)
+        session.commit()
+        session.close()
+
+        return {
+            "success": True,
+            "data": {
+                "code": 200,
+                "message": "short url created successfully",
+                "short_code": short_code,
+                "short_url": f"http://localhost:8004/{short_code}"
+            }
+        }
+
+    def get_original_url(
+        self,
+        short_code: str
+    )-> str | None:
+        session = database.SessionLocal()
+        url_object = session.query(Url).filter(Url.short_code == short_code).first()
+        session.close()
+    
+        if not url_object:
+            return None
+        return url_object.original_url
 
         
