@@ -6,6 +6,7 @@ from urllib.error import URLError, HTTPError
 from app.config import database
 from app.models import Url
 from datetime import datetime
+from sqlalchemy.orm import Session
 class UrlService:
     """url service"""
 
@@ -84,11 +85,52 @@ class UrlService:
         short_code: str
     )-> str | None:
         session = database.SessionLocal()
-        url_object = session.query(Url).filter(Url.short_code == short_code).first()
-        session.close()
-    
-        if not url_object:
-            return None
-        return url_object.original_url
-
+        try:
+            url_object = session.query(Url).filter(
+                Url.short_code == short_code
+            ).first()
+            
+            if not url_object:
+                return None
         
+            self.increment_click_count(
+                session=session, 
+                url_object=url_object
+            )
+            
+            return url_object.original_url
+        
+        finally:
+            session.close()
+
+
+    def increment_click_count(
+        self,
+        session: Session,
+        url_object: Url,
+    ) -> None:
+        try:
+            url_object.click_count += 1
+            session.commit()
+
+        except Exception:
+            session.rollback()
+            raise
+        
+    def get_url_stats(
+        self,
+        short_code: str
+    )-> Url | None:
+        session = database.SessionLocal()
+        try:
+            url_object = session.query(Url).filter(
+                Url.short_code == short_code
+            ).first()
+
+            if not url_object:
+                return None
+
+            return url_object
+        
+        finally:
+            session.close()

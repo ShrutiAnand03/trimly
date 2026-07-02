@@ -27,6 +27,11 @@ class Url(Base):
         nullable=False,
     )
 
+    click_count: Mapped[int] = mapped_column(
+        default=0,
+        nullable=False,
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,
