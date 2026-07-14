@@ -1,0 +1,67 @@
+<section class="result" aria-labelledby="result-heading">
+  <header class="result__header">
+    <span class="result__badge" aria-hidden="true">
+      <mat-icon>check_circle</mat-icon>
+    </span>
+    <h2 id="result-heading" class="result__title">Your short link is ready</h2>
+  </header>
+
+  <!-- Original URL -->
+  <div class="result__row">
+    <span class="result__label">Original URL</span>
+    <p class="result__original">{{ result().originalUrl }}</p>
+  </div>
+
+  <!-- Short URL + actions -->
+  <div class="result__row">
+    <span class="result__label">Short URL</span>
+    <div class="result__short">
+      <a
+        class="result__short-link"
+        [href]="result().shortUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ result().shortUrl }}
+      </a>
+
+      <div class="result__actions">
+        <button
+          mat-flat-button
+          type="button"
+          class="result__copy"
+          [class.is-copied]="copied()"
+          (click)="copyShortUrl()"
+          [attr.aria-label]="'Copy short URL ' + result().shortUrl"
+        >
+          <mat-icon aria-hidden="true">{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+          <span>{{ copied() ? 'Copied!' : 'Copy' }}</span>
+        </button>
+
+        <a
+          mat-stroked-button
+          class="result__open"
+          [href]="result().shortUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'Open short URL ' + result().shortUrl + ' in a new tab'"
+        >
+          <mat-icon aria-hidden="true">open_in_new</mat-icon>
+          <span>Open</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Politely announce the copy result to screen readers. -->
+  <span class="sr-only" role="status" aria-live="polite">
+    {{ copied() ? 'Short URL copied to clipboard' : '' }}
+  </span>
+
+  <footer class="result__footer">
+    <a class="result__analytics" [routerLink]="['/analytics', result().shortCode]">
+      <mat-icon aria-hidden="true">bar_chart</mat-icon>
+      View analytics
+    </a>
+  </footer>
+</section>

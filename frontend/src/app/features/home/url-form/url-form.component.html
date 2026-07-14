@@ -1,0 +1,37 @@
+<form class="url-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="url-form__row">
+    <mat-form-field class="url-form__field" appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Paste a long URL</mat-label>
+      <input
+        matInput
+        type="url"
+        formControlName="url"
+        placeholder="https://example.com/very/long/link"
+        autocomplete="url"
+        spellcheck="false"
+        [attr.aria-invalid]="!!errorMessage"
+        [attr.aria-describedby]="errorMessage ? 'url-error' : null"
+      />
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      type="submit"
+      class="url-form__submit"
+      [disabled]="loading()"
+      [attr.aria-busy]="loading()"
+    >
+      <!-- Single root node per branch so Material can project into its icon slot. -->
+      @if (loading()) {
+        <mat-spinner class="url-form__spinner" [diameter]="20" />
+      } @else {
+        <mat-icon aria-hidden="true">content_cut</mat-icon>
+      }
+      <span>{{ loading() ? 'Shortening…' : 'Shorten URL' }}</span>
+    </button>
+  </div>
+
+  @if (errorMessage) {
+    <p id="url-error" class="url-form__error" role="alert">{{ errorMessage }}</p>
+  }
+</form>

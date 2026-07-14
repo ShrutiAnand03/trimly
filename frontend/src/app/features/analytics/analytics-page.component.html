@@ -1,0 +1,64 @@
+<section class="analytics container">
+  <!-- Back navigation -->
+  <a routerLink="/" class="analytics__back">
+    <mat-icon aria-hidden="true">arrow_back</mat-icon>
+    Back to home
+  </a>
+
+  <header class="analytics__header">
+    <h1 class="analytics__title">Link analytics</h1>
+    <p class="analytics__code">
+      Short code: <code>{{ shortCode() }}</code>
+    </p>
+  </header>
+
+  <!-- Exactly one state renders at a time. -->
+  @if (loading()) {
+    <app-loading message="Loading link analytics…" />
+  } @else if (error(); as appError) {
+    @if (appError.notFound) {
+      <!-- 404 is an expected outcome, not a failure — show an empty state. -->
+      <app-empty-state
+        icon="link_off"
+        title="Link not found"
+        [description]="'We could not find a link with the short code “' + shortCode() + '”. It may have been removed or never existed.'"
+      >
+        <a mat-flat-button routerLink="/" class="analytics__cta">Shorten a new URL</a>
+      </app-empty-state>
+    } @else {
+      <app-error-card
+        title="Could not load analytics"
+        [message]="appError.message"
+        (retry)="fetchStats()"
+      />
+    }
+  } @else if (stats(); as data) {
+    <div class="analytics__grid">
+      <!-- Headline metric -->
+      <app-stats-card
+        class="analytics__clicks"
+        label="Total clicks"
+        icon="ads_click"
+        [emphasis]="true"
+        [value]="(data.clickCount | number) ?? '0'"
+      />
+
+      <!-- The date/number pipes are typed `string | null`; fall back explicitly
+           rather than widening the StatsCard input. -->
+      <app-stats-card
+        label="Created"
+        icon="schedule"
+        [value]="(data.createdAt | date: 'MMM d, y · h:mm a') ?? '—'"
+      />
+
+      <app-stats-card label="Short URL" icon="link" [value]="data.shortUrl" />
+
+      <app-stats-card
+        class="analytics__original"
+        label="Original URL"
+        icon="public"
+        [value]="data.originalUrl"
+      />
+    </div>
+  }
+</section>

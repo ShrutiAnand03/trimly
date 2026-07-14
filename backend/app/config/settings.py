@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     database_url: str
     base_url: str = "http://localhost:8004"
 
+    # Origins allowed to call the API from a browser (the Angular frontend).
+    # Override in .env with a JSON list, e.g. CORS_ORIGINS=["https://trimly.app"]
+    cors_origins: list[str] = ["http://localhost:4200"]
+
 
 def get_settings() -> Settings:
     """Return application settings, read fresh from the environment."""

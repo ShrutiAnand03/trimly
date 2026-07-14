@@ -1,0 +1,28 @@
+<section class="hero container">
+  <!-- Hero -->
+  <h1 class="hero__title">Trimly</h1>
+  <p class="hero__subtitle">
+    Shorten URLs instantly.<br />
+    Track analytics effortlessly.
+  </p>
+
+  <!-- Shorten form -->
+  <div class="hero__form">
+    <app-url-form [loading]="loading()" (submitted)="onSubmit($event)" />
+  </div>
+
+  <!-- Result / error. Only one can be present at a time. -->
+  @if (result(); as shortened) {
+    <div class="hero__result">
+      <app-url-result-card [result]="shortened" />
+    </div>
+  } @else if (error(); as message) {
+    <div class="hero__result">
+      <app-error-card
+        title="Could not shorten that URL"
+        [message]="message"
+        (retry)="onRetry()"
+      />
+    </div>
+  }
+</section>

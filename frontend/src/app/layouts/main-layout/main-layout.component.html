@@ -1,0 +1,14 @@
+<div class="layout">
+  <app-navbar />
+
+  <!-- Target of the skip link; feature pages render here. -->
+  <main id="main-content" class="layout__content" tabindex="-1">
+    <router-outlet />
+  </main>
+
+  <footer class="layout__footer">
+    <div class="container">
+      <p>© {{ year }} Trimly — Shorten URLs instantly.</p>
+    </div>
+  </footer>
+</div>

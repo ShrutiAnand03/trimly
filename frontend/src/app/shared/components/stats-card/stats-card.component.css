@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+.stats-card {
+  height: 100%;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow var(--duration-base) var(--ease),
+    transform var(--duration-base) var(--ease);
+}
+
+.stats-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.stats-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.stats-card__icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary);
+}
+
+.stats-card__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.stats-card__value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  /* Long URLs must never blow out the card. */
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+/* --- Headline variant (click count) ----------------------------------- */
+:host(.stats-card--emphasis) .stats-card__value {
+  font-size: clamp(2.75rem, 8vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}

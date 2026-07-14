@@ -1,0 +1,37 @@
+// Angular Material M3 theme for Trimly.
+// We start from Material's tonal palettes for correct contrast/state handling,
+// then override the key `--mat-sys-*` system variables with Trimly's exact brand
+// colors so Material components (buttons, spinner, snackbar, form fields) match
+// the design system defined in styles.css.
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      // Product typeface. Inter is loaded in index.html.
+      typography: Inter,
+      density: 0,
+    )
+  );
+
+  // --- Trimly brand overrides -------------------------------------------------
+  // These map Material's semantic slots onto the exact brand palette.
+  --mat-sys-primary: #2563eb; // Primary   (#2563EB)
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-tertiary: #3b82f6; // Accent    (#3B82F6)
+  --mat-sys-on-tertiary: #ffffff;
+  --mat-sys-error: #ef4444; // Error     (#EF4444)
+  --mat-sys-on-error: #ffffff;
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  height: 100%;
+}

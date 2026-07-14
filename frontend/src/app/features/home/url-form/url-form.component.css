@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+.url-form__row {
+  display: flex;
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.url-form__field {
+  flex: 1;
+  min-width: 0; /* Allows the field to shrink instead of overflowing. */
+}
+
+.url-form__submit {
+  height: 56px; /* Matches the outlined form field height. */
+  padding-inline: var(--space-5);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.url-form__spinner {
+  margin-right: var(--space-2);
+}
+
+.url-form__error {
+  margin-top: var(--space-2);
+  color: var(--color-error);
+  font-size: 0.875rem;
+}
+
+/* --- Mobile: stack the field and button ------------------------------- */
+@media (max-width: 640px) {
+  .url-form__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .url-form__submit {
+    width: 100%;
+  }
+}

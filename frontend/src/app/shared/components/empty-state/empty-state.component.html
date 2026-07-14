@@ -1,0 +1,14 @@
+<div class="empty-state">
+  <span class="empty-state__icon" aria-hidden="true">
+    <mat-icon>{{ icon() }}</mat-icon>
+  </span>
+
+  <h2 class="empty-state__title">{{ title() }}</h2>
+
+  @if (description()) {
+    <p class="empty-state__description">{{ description() }}</p>
+  }
+
+  <!-- Optional caller-supplied action. -->
+  <ng-content />
+</div>

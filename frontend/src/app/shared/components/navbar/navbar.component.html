@@ -1,0 +1,22 @@
+<header class="navbar">
+  <nav class="navbar__inner container" aria-label="Main">
+    <!-- Logo doubles as the home link. -->
+    <a routerLink="/" class="navbar__brand" aria-label="Trimly — go to home">
+      <span class="navbar__mark" aria-hidden="true">T</span>
+      <span class="navbar__name">Trimly</span>
+    </a>
+
+    <ul class="navbar__links">
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="navbar__link"
+        >
+          Home
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>

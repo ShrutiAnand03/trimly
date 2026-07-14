@@ -1,0 +1,10 @@
+<div class="stats-card">
+  <div class="stats-card__head">
+    @if (icon()) {
+      <mat-icon class="stats-card__icon" aria-hidden="true">{{ icon() }}</mat-icon>
+    }
+    <span class="stats-card__label">{{ label() }}</span>
+  </div>
+
+  <p class="stats-card__value">{{ value() }}</p>
+</div>

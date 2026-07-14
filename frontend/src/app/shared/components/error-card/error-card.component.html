@@ -1,0 +1,16 @@
+<!-- role="alert" makes screen readers announce failures immediately. -->
+<div class="error-card" role="alert">
+  <span class="error-card__icon" aria-hidden="true">
+    <mat-icon>error_outline</mat-icon>
+  </span>
+
+  <h2 class="error-card__title">{{ title() }}</h2>
+  <p class="error-card__message">{{ message() }}</p>
+
+  @if (retryable()) {
+    <button mat-stroked-button type="button" class="error-card__retry" (click)="retry.emit()">
+      <mat-icon aria-hidden="true">refresh</mat-icon>
+      Try again
+    </button>
+  }
+</div>
