@@ -4,6 +4,7 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 from app.config import database
+from app.config.settings import get_settings
 from app.models import Url
 from datetime import datetime
 from sqlalchemy.orm import Session
@@ -60,6 +61,7 @@ class UrlService:
             }
         
         short_code = generate_short_code()
+        base_url = get_settings().base_url.rstrip("/")
         session = database.SessionLocal()
         url_object = Url(
             original_url=url,
@@ -76,7 +78,7 @@ class UrlService:
                 "code": 200,
                 "message": "short url created successfully",
                 "short_code": short_code,
-                "short_url": f"http://localhost:8004/{short_code}"
+                "short_url": f"{base_url}/{short_code}"
             }
         }
 

@@ -45,6 +45,16 @@ def test_create_short_url_persists_and_returns_success(mocker, db_session):
     assert isinstance(stored.created_at, datetime)
 
 
+def test_create_short_url_uses_base_url_env(mocker, monkeypatch, db_session):
+    monkeypatch.setenv("BASE_URL", "https://trim.ly/")
+    mocker.patch.object(url_service, "validate_url", return_value=True)
+
+    with patch("app.services.url_service.generate_short_code", return_value="abc123"):
+        result = url_service.create_short_url(url="https://example.com/page")
+
+    assert result["data"]["short_url"] == "https://trim.ly/abc123"
+
+
 def test_get_original_url_returns_url_when_found(db_session):
     db_session.add(
         Url(
