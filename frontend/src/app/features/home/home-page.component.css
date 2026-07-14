@@ -1,18 +1,82 @@
 .hero {
-  /* Generous whitespace, capped width for comfortable reading. */
-  max-width: 760px;
-  padding-top: var(--space-10);
-  padding-bottom: var(--space-10);
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-12) var(--space-10);
+}
+
+/* --- Decorative backdrop ---------------------------------------------- */
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Fine dot grid that fades out toward the bottom. */
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--color-border-strong) 1px, transparent 1px);
+  background-size: 24px 24px;
+  /* Fade the grid so it never competes with content. */
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+  opacity: 0.7;
+}
+
+/* Soft indigo bloom behind the wordmark. */
+.hero__glow {
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  width: 680px;
+  height: 420px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgb(99 102 241 / 0.18) 0%,
+    rgb(124 58 237 / 0.08) 45%,
+    transparent 70%
+  );
+  filter: blur(8px);
+}
+
+.hero__inner {
+  position: relative; /* Sits above the backdrop. */
+  max-width: 720px;
   text-align: center;
 }
 
+/* --- Eyebrow ----------------------------------------------------------- */
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.hero__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px rgb(22 163 74 / 0.15);
+}
+
+/* --- Headline ---------------------------------------------------------- */
 .hero__title {
-  font-size: clamp(3rem, 9vw, 4.5rem);
+  margin-top: var(--space-5);
+  font-size: clamp(3.25rem, 10vw, 5rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-  /* Brand gradient wordmark. */
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  letter-spacing: -0.045em;
+  line-height: 1;
+  background: linear-gradient(135deg, #09090b 25%, var(--color-primary) 75%, var(--color-violet));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -20,24 +84,48 @@
 
 .hero__subtitle {
   margin-top: var(--space-4);
-  font-size: clamp(1rem, 2.5vw, 1.1875rem);
-  line-height: 1.6;
+  font-size: clamp(1rem, 2.4vw, 1.1875rem);
+  line-height: 1.65;
   color: var(--color-text-muted);
 }
 
+/* --- Form -------------------------------------------------------------- */
 .hero__form {
   margin-top: var(--space-8);
   text-align: left;
 }
 
 .hero__result {
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
   text-align: left;
 }
 
+/* --- Trust markers ----------------------------------------------------- */
+.hero__features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--color-text-subtle);
+}
+
+.hero__features li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* --- Mobile ------------------------------------------------------------ */
 @media (max-width: 640px) {
   .hero {
-    padding-top: var(--space-8);
-    padding-bottom: var(--space-8);
+    padding-block: var(--space-8);
+  }
+
+  .hero__features {
+    gap: var(--space-4);
   }
 }

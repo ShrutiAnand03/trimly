@@ -1,28 +1,48 @@
-<section class="hero container">
-  <!-- Hero -->
-  <h1 class="hero__title">Trimly</h1>
-  <p class="hero__subtitle">
-    Shorten URLs instantly.<br />
-    Track analytics effortlessly.
-  </p>
-
-  <!-- Shorten form -->
-  <div class="hero__form">
-    <app-url-form [loading]="loading()" (submitted)="onSubmit($event)" />
+<section class="hero">
+  <!-- Decorative backdrop: dot grid + soft indigo glow. Hidden from AT. -->
+  <div class="hero__backdrop" aria-hidden="true">
+    <div class="hero__grid"></div>
+    <div class="hero__glow"></div>
   </div>
 
-  <!-- Result / error. Only one can be present at a time. -->
-  @if (result(); as shortened) {
-    <div class="hero__result">
-      <app-url-result-card [result]="shortened" />
+  <div class="hero__inner container">
+    <!-- Eyebrow -->
+    <span class="hero__eyebrow">
+      <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+      Free URL shortener with analytics
+    </span>
+
+    <h1 class="hero__title">Trimly</h1>
+    <p class="hero__subtitle">
+      Shorten URLs instantly.<br />
+      Track analytics effortlessly.
+    </p>
+
+    <!-- Shorten form -->
+    <div class="hero__form">
+      <app-url-form [loading]="loading()" (submitted)="onSubmit($event)" />
     </div>
-  } @else if (error(); as message) {
-    <div class="hero__result">
-      <app-error-card
-        title="Could not shorten that URL"
-        [message]="message"
-        (retry)="onRetry()"
-      />
-    </div>
-  }
+
+    <!-- Result / error. Only one can be present at a time. -->
+    @if (result(); as shortened) {
+      <div class="hero__result">
+        <app-url-result-card [result]="shortened" />
+      </div>
+    } @else if (error(); as message) {
+      <div class="hero__result">
+        <app-error-card
+          title="Could not shorten that URL"
+          [message]="message"
+          (retry)="onRetry()"
+        />
+      </div>
+    } @else {
+      <!-- Trust markers only while the result slot is empty. -->
+      <ul class="hero__features">
+        <li><span aria-hidden="true">⚡</span> Instant links</li>
+        <li><span aria-hidden="true">📊</span> Click tracking</li>
+        <li><span aria-hidden="true">🔒</span> No signup needed</li>
+      </ul>
+    }
+  </div>
 </section>

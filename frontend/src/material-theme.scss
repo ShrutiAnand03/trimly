@@ -21,13 +21,14 @@ html {
   );
 
   // --- Trimly brand overrides -------------------------------------------------
-  // These map Material's semantic slots onto the exact brand palette.
-  --mat-sys-primary: #2563eb; // Primary   (#2563EB)
+  --mat-sys-primary: #4f46e5;
   --mat-sys-on-primary: #ffffff;
-  --mat-sys-tertiary: #3b82f6; // Accent    (#3B82F6)
+  --mat-sys-tertiary: #6366f1;
   --mat-sys-on-tertiary: #ffffff;
-  --mat-sys-error: #ef4444; // Error     (#EF4444)
+  --mat-sys-error: #dc2626;
   --mat-sys-on-error: #ffffff;
+  --mat-sys-surface: #ffffff;
+  --mat-sys-on-surface: #09090b;
 }
 
 body {

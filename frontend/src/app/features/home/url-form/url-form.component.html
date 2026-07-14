@@ -2,6 +2,7 @@
   <div class="url-form__row">
     <mat-form-field class="url-form__field" appearance="outline" subscriptSizing="dynamic">
       <mat-label>Paste a long URL</mat-label>
+      <mat-icon matPrefix class="url-form__prefix" aria-hidden="true">link</mat-icon>
       <input
         matInput
         type="url"
@@ -23,15 +24,18 @@
     >
       <!-- Single root node per branch so Material can project into its icon slot. -->
       @if (loading()) {
-        <mat-spinner class="url-form__spinner" [diameter]="20" />
+        <mat-spinner class="url-form__spinner" [diameter]="18" />
       } @else {
-        <mat-icon aria-hidden="true">content_cut</mat-icon>
+        <mat-icon aria-hidden="true">arrow_forward</mat-icon>
       }
       <span>{{ loading() ? 'Shortening…' : 'Shorten URL' }}</span>
     </button>
   </div>
 
   @if (errorMessage) {
-    <p id="url-error" class="url-form__error" role="alert">{{ errorMessage }}</p>
+    <p id="url-error" class="url-form__error" role="alert">
+      <mat-icon aria-hidden="true">error_outline</mat-icon>
+      {{ errorMessage }}
+    </p>
   }
 </form>

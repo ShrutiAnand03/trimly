@@ -1,35 +1,54 @@
 /* =========================================================================
    Trimly — global styles & design tokens
    Loaded after material-theme.scss so app tokens win where they overlap.
+
+   Design language: refined light SaaS. Indigo accent on a zinc neutral ramp,
+   layered shadows for real depth, and restrained motion.
    ========================================================================= */
 
 :root {
-  /* --- Brand palette --------------------------------------------------- */
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-accent: #3b82f6;
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
+  /* --- Brand ------------------------------------------------------------ */
+  --color-primary: #4f46e5; /* indigo-600 */
+  --color-primary-hover: #4338ca; /* indigo-700 */
+  --color-primary-soft: #eef2ff; /* indigo-50  */
+  --color-accent: #6366f1; /* indigo-500 */
+  --color-violet: #7c3aed; /* for gradient range */
 
-  /* --- Surfaces & text -------------------------------------------------- */
-  --color-bg: #f8fafc;
+  --color-success: #16a34a;
+  --color-success-soft: #f0fdf4;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+  --color-error-soft: #fef2f2;
+
+  /* --- Neutrals (zinc ramp) --------------------------------------------- */
+  --color-bg: #fafafa;
   --color-surface: #ffffff;
-  --color-border: #e2e8f0;
-  --color-text: #0f172a;
-  --color-text-muted: #64748b;
-  --color-text-subtle: #94a3b8;
+  --color-surface-alt: #f4f4f5;
+  --color-border: #e4e4e7;
+  --color-border-strong: #d4d4d8;
+  --color-text: #09090b;
+  --color-text-muted: #52525b;
+  --color-text-subtle: #a1a1aa;
 
   /* --- Radii ------------------------------------------------------------ */
-  --radius-sm: 10px;
+  --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 999px;
 
-  /* --- Soft, modern shadows -------------------------------------------- */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.1);
+  /* --- Layered shadows (soft, modern) ----------------------------------- */
+  --shadow-xs: 0 1px 2px rgb(9 9 11 / 0.04);
+  --shadow-sm:
+    0 1px 2px rgb(9 9 11 / 0.04),
+    0 1px 3px rgb(9 9 11 / 0.06);
+  --shadow-md:
+    0 2px 4px -1px rgb(9 9 11 / 0.04),
+    0 8px 16px -4px rgb(9 9 11 / 0.08);
+  --shadow-lg:
+    0 4px 8px -2px rgb(9 9 11 / 0.04),
+    0 24px 48px -12px rgb(9 9 11 / 0.12);
+  --shadow-primary: 0 8px 24px -6px rgb(79 70 229 / 0.35);
 
   /* --- Spacing scale (4px base) ---------------------------------------- */
   --space-1: 0.25rem;
@@ -40,11 +59,14 @@
   --space-6: 2rem;
   --space-8: 3rem;
   --space-10: 4rem;
+  --space-12: 6rem;
 
   /* --- Motion (subtle, 150–250ms) -------------------------------------- */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
   --duration-base: 200ms;
+  --duration-slow: 250ms;
 
   /* --- Layout ----------------------------------------------------------- */
   --container-max: 1120px;
@@ -70,7 +92,10 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Inter's optical sizing + tighter default tracking reads sharper. */
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 h1,
@@ -93,7 +118,6 @@ a {
   border-radius: var(--radius-sm);
 }
 
-/* Screen-reader-only helper for non-visual labels. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -114,15 +138,25 @@ a {
   padding-inline: var(--space-5);
 }
 
-/* --- Snackbar variants (success / error feedback) --------------------- */
+/* --- Snackbar variants ------------------------------------------------- */
 .snackbar-success {
-  --mdc-snackbar-container-color: var(--color-success);
-  --mat-snack-bar-button-color: #ffffff;
-  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mdc-snackbar-container-color: #09090b;
+  --mat-snack-bar-button-color: #4ade80;
+  --mdc-snackbar-supporting-text-color: #fafafa;
 }
 
 .snackbar-error {
   --mdc-snackbar-container-color: var(--color-error);
   --mat-snack-bar-button-color: #ffffff;
   --mdc-snackbar-supporting-text-color: #ffffff;
+}
+
+/* --- Material form-field tuning --------------------------------------- */
+/* Softer, larger radius than Material's default outlined field. */
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-container-shape: 12px;
+  --mdc-outlined-text-field-outline-color: var(--color-border);
+  --mdc-outlined-text-field-hover-outline-color: var(--color-border-strong);
+  --mdc-outlined-text-field-focus-outline-color: var(--color-primary);
+  --mdc-outlined-text-field-label-text-color: var(--color-text-subtle);
 }

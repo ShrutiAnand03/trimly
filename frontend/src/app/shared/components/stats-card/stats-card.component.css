@@ -3,6 +3,8 @@
 }
 
 .stats-card {
+  position: relative;
+  overflow: hidden;
   height: 100%;
   padding: var(--space-5);
   background: var(--color-surface);
@@ -11,12 +13,12 @@
   box-shadow: var(--shadow-sm);
   transition:
     box-shadow var(--duration-base) var(--ease),
-    transform var(--duration-base) var(--ease);
+    border-color var(--duration-base) var(--ease);
 }
 
 .stats-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  border-color: var(--color-border-strong);
 }
 
 .stats-card__head {
@@ -24,38 +26,53 @@
   align-items: center;
   gap: var(--space-2);
   margin-bottom: var(--space-3);
-  color: var(--color-text-muted);
+  color: var(--color-text-subtle);
 }
 
 .stats-card__icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  color: var(--color-primary);
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-subtle);
 }
 
 .stats-card__label {
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .stats-card__value {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 0.9375rem;
+  font-weight: 500;
   color: var(--color-text);
-  /* Long URLs must never blow out the card. */
-  overflow-wrap: anywhere;
-  line-height: 1.5;
+  overflow-wrap: anywhere; /* Long URLs must never blow out the card. */
+  line-height: 1.55;
 }
 
 /* --- Headline variant (click count) ----------------------------------- */
-:host(.stats-card--emphasis) .stats-card__value {
-  font-size: clamp(2.75rem, 8vw, 4rem);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+:host(.stats-card--emphasis) .stats-card {
+  padding: var(--space-6);
+  background:
+    radial-gradient(ellipse 60% 100% at 100% 0%, rgb(99 102 241 / 0.1), transparent 70%),
+    var(--color-surface);
+}
+
+:host(.stats-card--emphasis) .stats-card__icon,
+:host(.stats-card--emphasis) .stats-card__label {
   color: var(--color-primary);
+}
+
+:host(.stats-card--emphasis) .stats-card__value {
+  font-size: clamp(3rem, 9vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  /* Tabular figures stop the number jittering as it updates. */
   font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

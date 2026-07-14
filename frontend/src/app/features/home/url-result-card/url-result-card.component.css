@@ -3,19 +3,19 @@
 }
 
 .result {
-  padding: var(--space-6);
+  padding: var(--space-5);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  /* Subtle entrance — 200ms, no bounce. */
-  animation: result-in var(--duration-base) var(--ease);
+  /* Subtle entrance — no bounce. */
+  animation: result-in var(--duration-slow) var(--ease-out);
 }
 
 @keyframes result-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -23,7 +23,6 @@
   }
 }
 
-/* Respect users who prefer reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   .result {
     animation: none;
@@ -35,42 +34,51 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .result__badge {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--radius-full);
-  background: color-mix(in srgb, var(--color-success) 14%, transparent);
+  background: var(--color-success-soft);
   color: var(--color-success);
 }
 
+.result__badge mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
 .result__title {
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 /* --- Rows -------------------------------------------------------------- */
 .result__row + .result__row {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
 }
 
 .result__label {
   display: block;
   margin-bottom: var(--space-2);
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-text-subtle);
 }
 
 .result__original {
   color: var(--color-text-muted);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   overflow-wrap: anywhere; /* Long URLs wrap instead of overflowing. */
 }
 
@@ -80,13 +88,16 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-4);
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+  /* Tinted indigo panel makes the payload the hero of the card. */
+  background: var(--color-primary-soft);
+  border: 1px solid rgb(79 70 229 / 0.18);
   border-radius: var(--radius-md);
 }
 
 .result__short-link {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--color-primary);
   overflow-wrap: anywhere;
@@ -102,6 +113,22 @@
   flex-shrink: 0;
 }
 
+.result__copy,
+.result__open {
+  height: 36px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.result__open {
+  background: var(--color-surface);
+}
+
+.result__copy {
+  transition: background-color var(--duration-base) var(--ease);
+}
+
 .result__copy.is-copied {
   background: var(--color-success);
   color: #fff;
@@ -109,7 +136,7 @@
 
 /* --- Footer ------------------------------------------------------------ */
 .result__footer {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-border);
 }
@@ -118,22 +145,25 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-primary);
   border-radius: var(--radius-sm);
+  transition: gap var(--duration-fast) var(--ease);
 }
 
 .result__analytics:hover {
-  text-decoration: underline;
+  gap: var(--space-3);
+}
+
+.result__analytics mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
 }
 
 /* --- Mobile ------------------------------------------------------------ */
 @media (max-width: 640px) {
-  .result {
-    padding: var(--space-5);
-  }
-
   .result__short {
     flex-direction: column;
     align-items: stretch;
