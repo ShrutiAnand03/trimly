@@ -21,9 +21,6 @@ dev = [
     "pytest-mock>=3.14.0",
 ]
 
-[tool.poetry]
-package-mode = false
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
