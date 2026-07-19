@@ -89,7 +89,7 @@ def mock_url_head_ok(mocker):
         mock_response.__enter__ = MagicMock(return_value=mock_response)
         mock_response.__exit__ = MagicMock(return_value=False)
         return mocker.patch(
-            "app.services.url_service.urlopen",
+            "app.services.url_service._URL_OPENER.open",
             return_value=mock_response,
         )
 
@@ -100,7 +100,7 @@ def mock_url_head_ok(mocker):
 def mock_url_head_fail(mocker):
     def _patch(error):
         return mocker.patch(
-            "app.services.url_service.urlopen",
+            "app.services.url_service._URL_OPENER.open",
             side_effect=error,
         )
 
