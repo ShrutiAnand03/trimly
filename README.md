@@ -1,7 +1,7 @@
 # Trimly
 
 A modern, full-stack URL shortener — shorten links instantly and track click
-analytics. Flask REST API backend, Angular single-page frontend.
+analytics. Flask REST API backend and Angular frontend.
 
 ---
 
