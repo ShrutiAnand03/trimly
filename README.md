@@ -180,12 +180,3 @@ cd frontend && npm start
 
 Then open **http://localhost:4200**.
 
----
-
-## Notes & limitations
-
-- **Personal-scale project.** No authentication or rate limiting — link creation
-  is open to anyone who can reach the API.
-- **Link lifetime.** Short links do not expire; they live as long as their
-  database row exists. Back up your Postgres data to keep links working.
-- **Deployment** (Docker, hosting, migrations-on-deploy) is not yet configured.
