@@ -1,0 +1,28 @@
+# Keep the build context small and never bake secrets/local state into the image.
+
+# Virtual env — rebuilt inside the image
+.venv/
+
+# Secrets — provided at runtime via env vars, never copied in
+.env
+.env.*
+!.env.example
+
+# Python caches / build artifacts
+__pycache__/
+*.py[cod]Dockerize the backend — a Dockerfile that installs deps with uv and runs gunicorn --config gunicorn.conf.py wsgi:app
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Tests — not needed in the runtime image
+tests/
+
+# Tooling / editor
+.git/
+.gitignore
+.vscode/
+.idea/
+*.md
