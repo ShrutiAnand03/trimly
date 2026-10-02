@@ -10,7 +10,7 @@
 
 # Python caches / build artifacts
 __pycache__/
-*.py[cod]Dockerize the backend — a Dockerfile that installs deps with uv and runs gunicorn --config gunicorn.conf.py wsgi:app
+*.py[cod]
 .pytest_cache/
 .ruff_cache/
 .coverage

@@ -3,7 +3,7 @@ import multiprocessing
 import os
 
 bind = os.getenv("GUNICORN_BIND", "0.0.0.0:8004")
-workers = int(os.getenv("GUNICORN_WORKERS", (multiprocessing.cpu_count() * 2) + 1))
+workers = int(os.getenv("GUNICORN_WORKERS", min((multiprocessing.cpu_count() * 2) + 1, 4)))
 threads = int(os.getenv("GUNICORN_THREADS", "4"))
 
 worker_class = "gthread"

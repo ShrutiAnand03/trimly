@@ -19,8 +19,6 @@ ENV UV_COMPILE_BYTECODE=1 \
 
 WORKDIR /app
 
-# Install dependencies first, using only the lockfiles, so this layer is cached
-# and only re-runs when dependencies change (not on every source edit).
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
@@ -38,6 +36,7 @@ RUN groupadd --system app && useradd --system --gid app --home-dir /app app
 WORKDIR /app
 
 COPY --from=builder --chown=app:app /app /app
+RUN chown app:app /app
 
 # Put the venv on PATH so `gunicorn`, `alembic`, etc. resolve without activation.
 ENV PATH="/app/.venv/bin:$PATH" \
@@ -48,4 +47,5 @@ USER app
 
 EXPOSE 8004
 
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["gunicorn", "--config", "gunicorn.conf.py", "wsgi:app"]
