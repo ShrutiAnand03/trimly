@@ -65,8 +65,12 @@ class _SafeRedirectHandler(HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-# Opener that validates every redirect target. Built once and reused.
 _URL_OPENER = build_opener(_SafeRedirectHandler)
+
+_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+)
 
 
 class UrlService:
@@ -96,17 +100,20 @@ class UrlService:
         if not host or not _is_public_host(host):
             return False
 
-        # Does the URL actually exist? Redirect targets are validated per hop.
         try:
             request = Request(
                 url=url,
-                method="HEAD"
+                method="HEAD",
+                headers={"User-Agent": _USER_AGENT}
             )
 
-            with _URL_OPENER.open(request, timeout=5) as response:
-                return response.status < 400
+            with _URL_OPENER.open(request, timeout=5):
+                return True
 
-        except(URLError, HTTPError):
+        except HTTPError:
+            return True
+
+        except URLError:
             return False
 
 

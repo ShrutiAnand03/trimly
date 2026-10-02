@@ -147,30 +147,35 @@ def test_validate_url_returns_true_for_successful_head(mock_url_head_ok):
     assert result is True
 
 
-@pytest.mark.parametrize("status", [400, 404, 500])
-def test_validate_url_rejects_http_error_status(mock_url_head_ok, status):
-    mock_url_head_ok(status=status)
+def test_validate_url_sends_browser_user_agent(mock_url_head_ok):
+    opener = mock_url_head_ok(status=200)
+
+    url_service.validate_url(url="https://example.com")
+
+    request = opener.call_args.args[0]
+    assert request.get_method() == "HEAD"
+    assert request.get_header("User-agent").startswith("Mozilla/5.0")
+
+
+@pytest.mark.parametrize("code", [403, 404, 405, 503])
+def test_validate_url_accepts_http_error_response(mock_url_head_fail, code):
+    mock_url_head_fail(
+        HTTPError(
+            url="https://example.com",
+            code=code,
+            msg="Error",
+            hdrs=None,
+            fp=None,
+        )
+    )
 
     result = url_service.validate_url(url="https://example.com")
 
-    assert result is False
+    assert result is True
 
 
-@pytest.mark.parametrize(
-    "error",
-    [
-        URLError("connection failed"),
-        HTTPError(
-            url="https://example.com",
-            code=503,
-            msg="Service Unavailable",
-            hdrs=None,
-            fp=None,
-        ),
-    ],
-)
-def test_validate_url_rejects_url_and_http_errors(mock_url_head_fail, error):
-    mock_url_head_fail(error)
+def test_validate_url_rejects_unreachable_host(mock_url_head_fail):
+    mock_url_head_fail(URLError("connection failed"))
 
     result = url_service.validate_url(url="https://example.com")
 
